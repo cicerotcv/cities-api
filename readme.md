@@ -11,6 +11,38 @@
 }
 ```
 
+## Search `(search.py)`
+
+```bash
+# input
+$ python ./search.py "sao paulo"
+# output
+[
+    {
+        "_id": "5fa0b349b20d4824443f6c89",
+        "name": "São Paulo do Potengi",
+        "lat": "-5.895",
+        "lng": "-35.76278",
+        "country": "5fa08226bea7a74c5c69abfa"
+    },
+    {
+        "_id": "5fa0b349b20d4824443f6f2e",
+        "name": "São Paulo",
+        "lat": "-23.5475",
+        "lng": "-46.63611",
+        "country": "5fa08226bea7a74c5c69abfa"
+    },
+    {
+        "_id": "5fa0b349b20d4824443f73c0",
+        "name": "São Paulo de Olivença",
+        "lat": "-3.37833",
+        "lng": "-68.8725",
+        "country": "5fa08226bea7a74c5c69abfa"
+    }
+]
+Elapsed time: 0.9119657
+```
+
 ## Examples (Schemas open to suggestions)
 
 ### City

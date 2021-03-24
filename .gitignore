@@ -1,5 +1,6 @@
 .ipynb_checkpoints
 *.ipynb
+/.vscode/
 
 !/src/data/*.json
 /src/data/*

@@ -1,0 +1,5 @@
+.ipynb_checkpoints
+*.ipynb
+
+/src/data/*
+!/src/data/*_converted.json

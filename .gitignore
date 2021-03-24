@@ -2,6 +2,6 @@
 *.ipynb
 /.vscode/
 
-!/src/data/*.json
-/src/data/*
-/src/data/*_mongo.json
+/src/*
+!/src/*.json
+/src/*_mongo.json

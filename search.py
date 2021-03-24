@@ -3,7 +3,7 @@ import re
 import sys
 import unicodedata
 
-source = "./src/data"
+source = "./src"
 
 
 def remove_accents(input_str):
@@ -17,8 +17,9 @@ def timeit(function):
     def wrapper(*args):
         from time import time_ns
         start = time_ns()
-        function(*args)
+        resp = function(*args)
         print("Elapsed time:", (time_ns() - start)/1e9)
+        return resp
     return wrapper
 
 
@@ -36,12 +37,13 @@ def search(query: str):
 
     def find_match(city) -> bool:
         return re.search(query, remove_accents(city["name"]),
-                         re.IGNORECASE | re.MULTILINE | re.L) != None
+                         re.IGNORECASE | re.MULTILINE) != None
 
-    resp = filter(find_match, cities)
-    print(json.dumps(list(resp), ensure_ascii=False, indent=4))
+    res = filter(find_match, cities)
+    res = json.dumps(list(res), ensure_ascii=False, indent=4)
+    return res
 
 
 if __name__ == "__main__":
     query = sys.argv[1]
-    search(query)
+    print(search(query))

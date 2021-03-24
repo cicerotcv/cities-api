@@ -1,4 +1,6 @@
 .ipynb_checkpoints
 *.ipynb
 
+!/src/data/*.json
+/src/data/*
 /src/data/*_mongo.json

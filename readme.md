@@ -1,4 +1,4 @@
-# Places API
+# Cities API
 
 ```javascript
 {

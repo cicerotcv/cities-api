@@ -1,5 +1,5 @@
 .ipynb_checkpoints
 *.ipynb
 
-/src/data/*
-!/src/data/*_converted.json
+/src/data/*_mongo.json
+# /src/data/*

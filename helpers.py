@@ -3,8 +3,53 @@ import json
 import re
 import sys
 import unicodedata
+from typing import List
 
-source = "./src/"
+SOURCE = "./src/"
+
+
+###########################################
+##                Models                 ##
+###########################################
+
+
+class Model(dict):
+    def __init__(self, object: dict):
+        super().__init__(object)
+        self.__dict__ = self
+
+
+class City(Model):
+    _id: str
+    name: str
+    lat: str
+    lng: str
+    country: str
+
+
+class Language(Model):
+    _id: str
+    name: str
+    native: str
+    initials: str
+
+
+class Country(Model):
+    _id: str
+    currency: List[str]
+    languages: List[str]
+    name: str
+    phone: str
+    capital: str
+    initials: str
+    continent: str
+
+
+class Continent(Model):
+    _id: str
+    name: str
+    initials: str
+
 
 ###########################################
 ##           Useful functions            ##
@@ -18,11 +63,11 @@ def remove_accents(text: str) -> str:
     return only_ascii
 
 
-def load_file(filename: str) -> str:
-    file = open(source + filename, mode='r', encoding='utf-8')
-    content = file.read()
+def load_file(filename: str, model: Model) -> List[Model]:
+    file = open(SOURCE + filename, mode='r', encoding='utf-8')
+    content = json.loads(file.read())
     file.close()
-    return content
+    return [model(item) for item in content]
 
 ###########################################
 ##              Decorators               ##
@@ -31,9 +76,9 @@ def load_file(filename: str) -> str:
 
 def timeit(function):
     def wrapper(*args):
-        from time import time_ns
-        start = time_ns()
+        from time import time as now
+        before = now()
         resp = function(*args)
-        print("Elapsed time:", (time_ns() - start)/1e9)
+        print("Elapsed time:", (now() - before))
         return resp
     return wrapper

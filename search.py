@@ -1,41 +1,18 @@
+# -*- coding: utf-8 -*-
 import json
 import re
 import sys
 import unicodedata
 
-source = "./src"
-
-
-def remove_accents(input_str):
-    # thx to https://stackoverflow.com/a/517974
-    nfkd_form = unicodedata.normalize('NFKD', input_str)
-    only_ascii = nfkd_form.encode('ASCII', 'ignore')
-    return only_ascii
-
-
-def timeit(function):
-    def wrapper(*args):
-        from time import time_ns
-        start = time_ns()
-        resp = function(*args)
-        print("Elapsed time:", (time_ns() - start)/1e9)
-        return resp
-    return wrapper
+from helpers import load_file, remove_accents, timeit
 
 
 @timeit
 def search(query: str):
     query = remove_accents(query)
-    with open(source + "/cities.json", "r", encoding='utf-8') as cities:
-        cities = json.loads(cities.read())
-    # with open(source + "/countries.json", "r", encoding='utf-8') as countries:
-    #     countries = json.loads(countries.read())
-    # with open(source + "/continents.json", "r", encoding='utf-8') as continents:
-    #     continents = json.loads(continents.read())
-    # with open(source + "/languages.json", "r", encoding='utf-8') as languages:
-    #     languages = json.loads(languages.read())
+    cities = json.loads(load_file("cities.json"))
 
-    def find_match(city) -> bool:
+    def find_match(city):
         return re.search(query, remove_accents(city["name"]),
                          re.IGNORECASE | re.MULTILINE) != None
 

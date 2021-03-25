@@ -8,7 +8,6 @@ from typing import List
 from helpers import City, load_file, remove_accents, timeit
 
 
-@timeit
 def search(query: str):
     query = remove_accents(query)
     cities = load_file("cities.json", City)
@@ -18,8 +17,7 @@ def search(query: str):
                          re.IGNORECASE | re.MULTILINE) != None
 
     res = filter(find_match, cities)
-    res = json.dumps(list(res), ensure_ascii=False, indent=4)
-    return res
+    return list(res)
 
 
 if __name__ == "__main__":

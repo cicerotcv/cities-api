@@ -3,7 +3,7 @@ import json
 import re
 import sys
 import unicodedata
-from typing import List
+from typing import List, Union
 
 SOURCE = "./src/"
 
@@ -19,12 +19,10 @@ class Model(dict):
         self.__dict__ = self
 
 
-class City(Model):
+class Continent(Model):
     _id: str
     name: str
-    lat: str
-    lng: str
-    country: str
+    initials: str
 
 
 class Language(Model):
@@ -37,18 +35,20 @@ class Language(Model):
 class Country(Model):
     _id: str
     currency: List[str]
-    languages: List[str]
+    languages: Union[str, Language]
     name: str
     phone: str
     capital: str
     initials: str
-    continent: str
+    continent: Union[str, Continent]
 
 
-class Continent(Model):
+class City(Model):
     _id: str
     name: str
-    initials: str
+    lat: str
+    lng: str
+    country: Union[str, Country]
 
 
 ###########################################
@@ -82,3 +82,14 @@ def timeit(function):
         print("Elapsed time:", (now() - before))
         return resp
     return wrapper
+
+
+if __name__ == "__main__":
+    city = load_file("cities.json", City)[0]
+    print("City:", city.keys())
+    country = load_file("countries.json", Country)[0]
+    print("Country:", country.keys())
+    continent = load_file("continents.json", Continent)[0]
+    print("Continent:", continent.keys())
+    language = load_file("languages.json", Language)[0]
+    print("Language:", language.keys())

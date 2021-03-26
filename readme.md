@@ -52,7 +52,7 @@ This endpoint returns a list of cities (see City model below)
   OR
 
   - **Code:** 400 BAD REQUEST <br />
-    **Content:** `{"error": "To many results. Consider being more specific.", "matches": [integer]}`
+    **Content:** `{"error": "Too many results. Consider being more specific.", "matches": [integer]}`
 
 - **Sample Call:**
 

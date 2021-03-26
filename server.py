@@ -5,7 +5,7 @@ import time
 
 from flask import Flask, abort, jsonify, make_response, request
 
-from search import search
+from search import model_selector, search
 
 app = Flask(__name__)
 
@@ -16,13 +16,18 @@ def page_not_found(e):
     return make_response({"error": "Not found."}, 404)
 
 
-@app.route('/cities', methods=["GET"])
-def get_city():
-    city = request.args.get("city", None)
-    if city == None:
+@app.route('/<collection>/', methods=["GET"])
+def get_collection(collection: str):
+    model = model_selector(collection)
+
+    query = request.args.get("query", None, type=str)
+    populate = request.args.get("populate", False, type=json.loads)
+
+    if query == None:
         return make_response({"error": "No query provided."}, 400)
 
-    resp = search(city)
+
+    resp: list = search(collection, query, populate)
 
     if len(resp) > 20:
         return make_response({"error": "To many results. Consider being more " +

@@ -1,5 +1,6 @@
 # Cities API
 
+---
 ## Counts
 
 ```javascript
@@ -10,8 +11,8 @@
   languages: 185
 }
 ```
-
-## Calling the API
+---
+## Calling the API:
 
 ### **Cities**
 
@@ -59,12 +60,12 @@ This endpoint returns a list of cities (see City model below)
   ```bash
   curl -X GET "127.0.0.1:5000/cities/?query=sao+paulo&populate=false"
   ```
-
+---
 ## Search `(search.py)`
 
 ```bash
 # input
-$ python ./search.py "sao paulo"
+> $ python ./search.py "sao paulo"
 # output
 [
     {
@@ -91,7 +92,7 @@ $ python ./search.py "sao paulo"
 ]
 Elapsed time: 0.9119657
 ```
-
+---
 ## Examples (Schemas open to suggestions)
 
 ### City
@@ -142,7 +143,7 @@ Elapsed time: 0.9119657
   "initials": "pt"
 }
 ```
-
+---
 ## Can't find your city?
 
 Feel free to send a PR whenever you want

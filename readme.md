@@ -1,5 +1,6 @@
 # Cities API
 
+---
 ## Counts
 
 ```javascript
@@ -10,8 +11,8 @@
   languages: 185
 }
 ```
-
-## Calling the API
+---
+## Calling the API:
 
 ### **Cities**
 
@@ -64,7 +65,7 @@ This endpoint returns a list of cities (see City model below)
 
 ```bash
 # input
-$ python ./search.py "sao paulo"
+> $ python ./search.py "sao paulo"
 # output
 [
     {

@@ -11,6 +11,55 @@
 }
 ```
 
+## Calling the API
+
+### **Cities**
+
+This endpoint returns a list of cities (see City model below)
+
+- **URL**
+
+  _/cities/_
+
+- **Method:**
+
+  _`GET`_
+
+- **URL Params**
+
+  **Required:**
+
+  `query=[url encoded string]`
+
+  **Optional:**
+
+  `populate=[boolean]`
+
+- **Data Params**
+
+  `No needed`
+
+- **Success Response:**
+
+  - **Code:** 200 <br />
+    **Content:** `City[]`
+
+- **Error Response:**
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `{"error": "No query provided."}`
+
+  OR
+
+  - **Code:** 400 BAD REQUEST <br />
+    **Content:** `{"error": "To many results. Consider being more specific.", "matches": [integer]}`
+
+- **Sample Call:**
+
+  ```bash
+  curl -X GET "127.0.0.1:5000/cities/?query=sao+paulo&populate=false"
+  ```
+
 ## Search `(search.py)`
 
 ```bash

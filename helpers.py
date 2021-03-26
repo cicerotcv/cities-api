@@ -5,55 +5,20 @@ import sys
 import unicodedata
 from typing import List, Union
 
+from models import City, Continent, Country, Language, Model
+
 SOURCE = "./src/"
-
-
-###########################################
-##                Models                 ##
-###########################################
-
-
-class Model(dict):
-    def __init__(self, object: dict):
-        super().__init__(object)
-        self.__dict__ = self
-
-
-class Continent(Model):
-    _id: str
-    name: str
-    initials: str
-
-
-class Language(Model):
-    _id: str
-    name: str
-    native: str
-    initials: str
-
-
-class Country(Model):
-    _id: str
-    currency: List[str]
-    languages: Union[str, Language]
-    name: str
-    phone: str
-    capital: str
-    initials: str
-    continent: Union[str, Continent]
-
-
-class City(Model):
-    _id: str
-    name: str
-    lat: str
-    lng: str
-    country: Union[str, Country]
+MODELS = {"cities": City,
+          "countries": Country}
 
 
 ###########################################
 ##           Useful functions            ##
 ###########################################
+
+
+def model_selector(collection_name: str) -> Model:
+    return MODELS.get(collection_name, Model)
 
 
 def remove_accents(text: str) -> str:
@@ -68,6 +33,36 @@ def load_file(filename: str, model: Model) -> List[Model]:
     content = json.loads(file.read())
     file.close()
     return [model(item) for item in content]
+
+
+def find_by_id(_id: str, array: list):
+    for element in array:
+        if element._id == _id:
+            return element
+
+
+def populate_country(country):
+    # load languages and continents
+    languages = load_file('languages.json', Language)
+    continents = load_file('continents.json', Continent)
+
+    def filter_language(lang): return lang._id in country.languages
+
+    return {"languages": list(filter(filter_language, languages)),
+            "continent": find_by_id(country.continent, continents)}
+
+
+def populate_collection(model_list: List[Union[City, Country]], collection: str):
+    if collection == "cities":
+        for index, element in enumerate(model_list):
+            countries = load_file('countries.json', model=Country)
+            country = find_by_id(element.country, countries)
+            country.update(populate_country(country))
+            model_list[index].country = country
+    elif collection == "countries":
+        for index, element in enumerate(model_list):
+            model_list[index].update(populate_country(element))
+    return model_list
 
 ###########################################
 ##              Decorators               ##

@@ -5,19 +5,25 @@ import sys
 import unicodedata
 from typing import List
 
-from helpers import City, load_file, remove_accents, timeit
+from helpers import (load_file, model_selector, populate_collection,
+                     remove_accents, timeit)
+from models import Model
 
 
-def search(query: str):
+def search(collection: str, query: str, populate: bool) -> list:
     query = remove_accents(query)
-    cities = load_file("cities.json", City)
+    model = load_file(f"{collection}.json", model_selector(collection))
 
-    def find_match(city: City):
+    def find_match(city: Model):
         return re.search(query, remove_accents(city.name),
                          re.IGNORECASE | re.MULTILINE) != None
 
-    res = filter(find_match, cities)
-    return list(res)
+    res = list(filter(find_match, model))
+
+    if (populate):
+        res = populate_collection(res, collection)
+
+    return res
 
 
 if __name__ == "__main__":

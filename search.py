@@ -27,5 +27,6 @@ def search(collection: str, query: str, populate: bool) -> list:
 
 
 if __name__ == "__main__":
-    query = sys.argv[1]
-    print(search(query))
+    src, query, populate = sys.argv[1:]
+    populate = bool(populate)
+    print(json.dumps(search(src, query, populate), ensure_ascii=False, indent=4))

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
+import os
+import pathlib
 import re
 import sys
 import unicodedata
@@ -63,6 +65,13 @@ def populate_collection(model_list: List[Union[City, Country]], collection: str)
         for index, element in enumerate(model_list):
             model_list[index].update(populate_country(element))
     return model_list
+
+
+def get_collection_list() -> list:
+    src_list = os.listdir(SOURCE)
+    collection_list = [pathlib.Path(path).stem for path in src_list]
+    return collection_list
+
 
 ###########################################
 ##              Decorators               ##

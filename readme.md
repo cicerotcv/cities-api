@@ -18,48 +18,52 @@
 
 This endpoint returns a list of cities (see City model below)
 
-- **URL**
+**PATH:**
 
-  _/cities/_
+    /cities/
+    /countries/
 
-- **Method:**
+**Method:** 
 
-  _`GET`_
+    GET
 
-- **URL Params**
+**URL Params**
 
-  **Required:**
+- **Required:**
 
-  `query=[url encoded string]`
+      query=[url encoded string]
 
-  **Optional:**
+- **Optional:**
 
-  `populate=[boolean]`
+      populate=[boolean] // defaults to true
 
-- **Data Params**
+**Data Params**
 
-  `No needed`
+    No needed
 
-- **Success Response:**
+**Success Response:**
 
-  - **Code:** 200 <br />
-    **Content:** `City[]`
+    Code: 200 OK
+    Content: City[]
 
-- **Error Response:**
+**Error Response:**
 
-  - **Code:** 400 BAD REQUEST <br />
-    **Content:** `{"error": "No query provided."}`
+    Code: 400 BAD REQUEST
+    Content: {"error": "No query provided."}
 
   OR
 
-  - **Code:** 400 BAD REQUEST <br />
-    **Content:** `{"error": "Too many results. Consider being more specific.", "matches": [integer]}`
+      Code: 400 BAD REQUEST
+      Content: {"error": "Too many results. Consider being more specific.", "matches": [integer]}
 
 - **Sample Call:**
 
-  ```bash
-  curl -X GET "127.0.0.1:5000/cities/?query=sao+paulo&populate=false"
-  ```
+```bash
+$ curl -X GET "127.0.0.1:5000/cities/?query=sao+paulo&populate=false"
+```
+```bash
+$ curl -X GET "127.0.0.1:5000/countries/?query=brazil&populate=true"
+```
 ---
 ## Search `(search.py)`
 

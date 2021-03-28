@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import json
+import argparse
 import re
 import sys
 import unicodedata
 from typing import List
 
 from helpers import (load_file, model_selector, populate_collection,
-                     remove_accents, timeit)
+                     remove_accents, get_collection_list, timeit)
 from models import Model
 
 
@@ -26,7 +27,18 @@ def search(collection: str, query: str, populate: bool) -> list:
     return res
 
 
+def main():
+    collection_list = get_collection_list()
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("collection", choices=collection_list)
+    parser.add_argument("query")
+    parser.add_argument("-p", "--populate", action="store_true")
+
+    args = parser.parse_args()
+
+    return search(args.collection, args.query, args.populate)
+
+
 if __name__ == "__main__":
-    src, query, populate = sys.argv[1:]
-    populate = bool(populate)
-    print(json.dumps(search(src, query, populate), ensure_ascii=False, indent=4))
+    print(json.dumps(main(), ensure_ascii=False, indent=4))

@@ -29,4 +29,4 @@ def search(collection: str, query: str, populate: bool) -> list:
 if __name__ == "__main__":
     src, query, populate = sys.argv[1:]
     populate = bool(populate)
-    print(search(src, query, populate))
+    print(json.dumps(search(src, query, populate), ensure_ascii=False, indent=4))

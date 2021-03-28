@@ -65,7 +65,7 @@ This endpoint returns a list of cities (see City model below)
 
 ```bash
 # input
-> $ python ./search.py "sao paulo"
+> $ python ./search.py cities "sao paulo" true
 # output
 [
     {
